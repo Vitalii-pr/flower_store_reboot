@@ -1,11 +1,9 @@
 package org.example.flowerstore_continue;
 
-import org.example.flowerstore_continue.flowerStore.Flower;
-import org.example.flowerstore_continue.flowerStore.FlowerBucket;
-import org.example.flowerstore_continue.flowerStore.FlowerColor;
-import org.example.flowerstore_continue.flowerStore.FlowerPack;
+import org.example.flowerstore_continue.flowerStore.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Random;
 
@@ -56,5 +54,35 @@ public class FlowerTest {
         Assertions.assertEquals(
                 bucket.getPrice(),
                 packSecond.getPrice()+pack.getPrice());
+    }
+
+    @Test
+    public void testBasicItemPrice() {
+        Item item = new BasicItem(100, "Basic Item");
+        assertEquals(100, item.getPrice(), 0.01);
+    }
+
+    @Test
+    public void testRibbonDecorator() {
+        Item item = new RibbonDecorator(new BasicItem(100, "Basic Item with Ribbon"));
+        assertEquals(140, item.getPrice(), 0.01);
+    }
+
+    @Test
+    public void testPaperDecorator() {
+        Item item = new PaperDecorator(new BasicItem(100, "Basic Item with Paper"));
+        assertEquals(113, item.getPrice(), 0.01);
+    }
+
+    @Test
+    public void testBasketDecorator() {
+        Item item = new BasketDecorator(new BasicItem(100, "Basic Item with Basket"));
+        assertEquals(104, item.getPrice(), 0.01);
+    }
+
+    @Test
+    public void testMultipleDecorators() {
+        Item item = new RibbonDecorator(new PaperDecorator(new BasketDecorator(new BasicItem(100, "Decorated Item"))));
+        assertEquals(157, item.getPrice(), 0.01);
     }
 }
